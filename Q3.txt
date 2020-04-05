@@ -1,0 +1,60 @@
+#include<iostream>
+#include<bits/stdc++.h>
+#define int long long int
+
+using namespace std;
+
+signed main()
+{
+    int t;
+    cin>>t;
+    for(int k=1;k<=t;k++)
+    {
+        cout<<"Case #"<<k<<": ";
+        int n;
+        cin>>n;
+        vector<pair<int,int>> v;
+        map<pair<int,int>,queue<int>> mapnew;
+        int a[n];
+        for(int i=0;i<n;i++)
+        {   cin>>a[i];
+            int x;cin>>x;
+            mapnew[{a[i],x}].push(i);
+            v.push_back({a[i],x});
+        }
+        sort(v.begin(),v.end());
+        int q=0,w=0;
+        bool flag=true;
+        char ans[n];
+        for(int i=0;i<n;i++)
+        {
+            if(q<=v[i].first)
+            {
+                q=v[i].second;
+                ans[mapnew[{v[i].first,v[i].second}].front()]='C';
+                mapnew[{v[i].first,v[i].second}].pop();
+            }
+            else if(w<=v[i].first)
+            {
+                w=v[i].second;
+                ans[mapnew[{v[i].first,v[i].second}].front()]='J';
+                mapnew[{v[i].first,v[i].second}].pop();
+            }
+            else
+            {
+                flag=false;
+                break;
+            }
+        }
+        if(flag==true)
+        {
+            for(int i=0;i<n;i++)
+            {
+                cout<<ans[i];
+            }cout<<endl;
+        }
+        else cout<<"IMPOSSIBLE"<<endl;
+    }
+
+    return 0;
+}
